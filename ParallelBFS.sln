@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ParallelBFS.Core", "ParallelBFS.Core\ParallelBFS.Core.csproj", "{6A9CC4DC-A08C-4B22-A4D7-8F03F1200D04}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ParallelBFS.Tests", "ParallelBFS.Tests\ParallelBFS.Tests.csproj", "{4281D5A8-6F11-4989-8087-F790F3925312}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6A9CC4DC-A08C-4B22-A4D7-8F03F1200D04}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6A9CC4DC-A08C-4B22-A4D7-8F03F1200D04}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6A9CC4DC-A08C-4B22-A4D7-8F03F1200D04}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6A9CC4DC-A08C-4B22-A4D7-8F03F1200D04}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4281D5A8-6F11-4989-8087-F790F3925312}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4281D5A8-6F11-4989-8087-F790F3925312}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4281D5A8-6F11-4989-8087-F790F3925312}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4281D5A8-6F11-4989-8087-F790F3925312}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
