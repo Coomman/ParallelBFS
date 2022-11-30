@@ -9,7 +9,22 @@ public static class Searcher
 
     public static void Dfs(this Graph graph, int start)
     {
-        
+        var stack = new Stack<Node>();
+        stack.Push(graph[start]);
+
+        while (stack.Any())
+        {
+            var cur = stack.Pop();
+            cur.Depth = 1;
+
+            foreach (var node in cur)
+            {
+                if (node.NotVisited)
+                {
+                    stack.Push(node);
+                }
+            }
+        }
     }
     
     public static void Bfs(this Graph graph, int start)

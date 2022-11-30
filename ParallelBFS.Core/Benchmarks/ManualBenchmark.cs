@@ -6,18 +6,18 @@ public static class ManualBenchmark
 {
     public static void CompareRun(int runsCount)
     {
+        var graph = GraphGenerator.CreatedConnectedGraph(100, 1000);
+        
         long seq = 0, par = 0;
         for (int i = 0; i < runsCount; i++)
         {
             Console.WriteLine($"Iteration #{i + 1}");
 
-            var graph = GraphGenerator.CreatedConnectedGraph(1000, 5000);
-
             var sw = Stopwatch.StartNew();
 
             graph.Bfs(0);
 
-            seq += sw.ElapsedMilliseconds;
+            seq += sw.ElapsedTicks;
             
             graph.Reset();
 
@@ -25,16 +25,16 @@ public static class ManualBenchmark
 
             graph.ParallelBfs(0);
 
-            par += sw.ElapsedMilliseconds;
+            par += sw.ElapsedTicks;
     
             sw.Reset();
         }
 
-        double seqAvg = seq / (double) runsCount, parAvg = par / (double) runsCount;
+        long seqAvg = seq / runsCount, parAvg = par / runsCount;
 
         Console.WriteLine();
-        Console.WriteLine("Sequential elapsed: " + TimeSpan.FromMilliseconds(seqAvg));
-        Console.WriteLine("Parallel elapsed: " + TimeSpan.FromMilliseconds(parAvg));
-        Console.WriteLine($"Parallel is {(seqAvg / parAvg - 1) * 100:F}% faster");
+        Console.WriteLine("Sequential elapsed: " + TimeSpan.FromTicks(seqAvg));
+        Console.WriteLine("Parallel elapsed: " + TimeSpan.FromTicks(parAvg));
+        Console.WriteLine($"Parallel is {(seqAvg / (double) parAvg - 1) * 100:F}% faster");
     }
 }

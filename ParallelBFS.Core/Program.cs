@@ -1,4 +1,5 @@
 ﻿using ParallelBFS.Core;
+using ParallelBFS.Core.Benchmarks;
 using ParallelBFS.Core.Models;
 
 // var vertices = new[]
@@ -14,9 +15,8 @@ using ParallelBFS.Core.Models;
 // var graph = new Graph(vertices);
 // graph.Bfs(0);
 
-var graph = GraphGenerator.CreatedConnectedGraph(10, 10);
-graph.Bfs(0);
+// var graph = GraphGenerator.CreatedConnectedGraph(10, 10);
+// graph.Bfs(0);
+//Console.WriteLine(string.Join(" ", graph.Select(x => x.Depth)));
 
-Console.WriteLine(string.Join(" ", graph.Select(x => x.Depth)));
-
-//ManualBenchmark.CompareRun(5);
+ManualBenchmark.CompareRun(5);
