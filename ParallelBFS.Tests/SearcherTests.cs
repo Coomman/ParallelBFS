@@ -1,15 +1,30 @@
 using FluentAssertions;
 using ParallelBFS.Core;
+using ParallelBFS.Core.Generators;
+using ParallelBFS.Core.Models;
 
 namespace ParallelBFS.Tests;
 
 public class SearcherTests
 {
     [Fact]
-    public void ParallelBfs_Correctness()
+    public void ParallelBfs_RandomGraph_Correctness()
     {
-        var graph = GraphGenerator.CreatedConnectedGraph(1000, 100000);
+        var graph = GraphGenerator.CreateConnectedGraph(1000, 100000);
         
+        TestCorrectness(graph);
+    }
+
+    [Fact]
+    public void ParallelBfs_Cube_Correctness()
+    {
+        var graph = GraphGenerator.CreateCube(100);
+        
+        TestCorrectness(graph);
+    }
+
+    private static void TestCorrectness(Graph graph)
+    {
         graph.Bfs(0);
         var res = graph.Select(x => x.Depth).ToArray();
         

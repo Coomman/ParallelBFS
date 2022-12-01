@@ -11,7 +11,7 @@ public class Graph : IEnumerable<Node>
     public Graph(int[][] edges)
     {
         _nodes = Enumerable.Repeat(0, edges.Length)
-            .Select((_, i) => new Node(i, new List<Node>()))
+            .Select((_, i) => new Node(i.ToString(), new List<Node>()))
             .ToArray();
 
         for (int i = 0; i < edges.Length; i++)

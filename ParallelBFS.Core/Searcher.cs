@@ -51,11 +51,11 @@ public static class Searcher
     
     public static void ParallelBfs(this Graph graph, int start)
     {
-        var currentLayer = new ConcurrentBag<Node>();
-        var nextLayer = new ConcurrentBag<Node>();
+        var currentLayer = new ConcurrentQueue<Node>();
+        var nextLayer = new ConcurrentQueue<Node>();
         
         graph[start].Depth = 0;
-        currentLayer.Add(graph[start]);
+        currentLayer.Enqueue(graph[start]);
 
         int depth = 1;
         while (currentLayer.Any())
@@ -63,27 +63,24 @@ public static class Searcher
             currentLayer
                 .AsParallel()
                 .WithDegreeOfParallelism(Parallelism)
-                .ForAll(node => BfsRoutine(node, depth, nextLayer));
+                .ForAll(node => ProcessNode(node, depth, nextLayer));
 
             currentLayer = nextLayer;
-            nextLayer = new ConcurrentBag<Node>();
+            nextLayer = new ConcurrentQueue<Node>();
 
             depth++;
         }
     }
     
-    private static void BfsRoutine(Node cur, int depth, ConcurrentBag<Node> nextLayer)
+    private static void ProcessNode(Node cur, int depth, ConcurrentQueue<Node> nextLayer)
     {
-        cur
-            .AsParallel()
-            .WithDegreeOfParallelism(Parallelism)
-            .Where(node => node.NotVisited)
-            .ForAll(node =>
+        foreach (var node in cur)
+        {
+            if (node.NotVisited &&
+                Interlocked.CompareExchange(ref node.Depth, depth, -1) == -1)
             {
-                if (Interlocked.CompareExchange(ref node.Depth, depth, -1) == -1)
-                {
-                    nextLayer.Add(node);
-                }
-            });
+                nextLayer.Enqueue(node);
+            }
+        }
     }
 }
