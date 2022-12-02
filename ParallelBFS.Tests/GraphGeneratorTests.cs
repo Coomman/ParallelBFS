@@ -14,23 +14,36 @@ public class GraphGeneratorTests
         
         graph.Dfs(0);
 
-        graph.Should().AllSatisfy(x => x.Depth.Should().Be(1));
+        graph.Should().AllSatisfy(x => x.NotVisited.Should().BeFalse());
     }
 
     [Fact]
     public void CreateCube_ShouldCreateCorrectCube()
     {
-        for (int i = 2; i < 10; i++)
+        for (int n = 2; n < 50; n++)
         {
-            var graph = GraphGenerator.CreateCube(i);
+            var graph = GraphGenerator.CreateCube(n);
             graph.Bfs(0);
 
-            graph.Should().AllSatisfy(x => x.Depth.Should().Be(GetDistance(x)), i.ToString());
-        }
-    }
+            var distances = new Dictionary<int, int>();
+            for (int i = 0; i <= n; i++)
+            {
+                for (int j = 0; j <= n; j++)
+                {
+                    for (int k = 0; k <= n; k++)
+                    {
+                        var dist = i + j + k;
 
-    private static int GetDistance(Node node)
-    {
-        return node.Name.Trim('{', '}').Trim().Split(", ").Select(int.Parse).Sum();
+                        distances.TryGetValue(dist, out var count);
+                        distances[dist] = count + 1;
+                    }
+                }
+            }
+
+            foreach (var (dist, count) in distances)
+            {
+                graph.Count(node => node.Depth == dist).Should().Be(count);
+            }
+        }
     }
 }

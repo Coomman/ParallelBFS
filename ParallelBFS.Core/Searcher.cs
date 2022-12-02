@@ -76,8 +76,7 @@ public static class Searcher
     {
         foreach (var node in cur)
         {
-            if (node.NotVisited &&
-                Interlocked.CompareExchange(ref node.Depth, depth, -1) == -1)
+            if (Interlocked.CompareExchange(ref node.Depth, depth, -1) == -1)
             {
                 nextLayer.Enqueue(node);
             }

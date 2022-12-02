@@ -1,3 +1,6 @@
-﻿using ParallelBFS.Core.Benchmarks;
+﻿using BenchmarkDotNet.Running;
+using ParallelBFS.Core.Benchmarks;
 
-ManualBenchmark.CompareRun(3);
+//ManualBenchmark.CompareRun(5);
+
+BenchmarkRunner.Run<SearcherBenchmark>();

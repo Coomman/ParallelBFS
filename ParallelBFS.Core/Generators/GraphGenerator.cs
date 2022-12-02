@@ -64,7 +64,7 @@ public static class GraphGenerator
     public static Graph CreateConnectedGraph(int nodes, int edges)
     {
         var nodesList = Enumerable.Repeat(0, nodes)
-            .Select((_, i) => new Node(i.ToString(), new List<Node>()))
+            .Select(_ => new Node())
             .ToArray();
 
         ConnectNodes(new List<Node>(nodesList));
