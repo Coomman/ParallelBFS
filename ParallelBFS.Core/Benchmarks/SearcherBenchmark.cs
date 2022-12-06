@@ -16,6 +16,13 @@ public class SearcherBenchmark
     {
         _graph = GraphGenerator.CreateCube(Size);
     }
+
+    [IterationCleanup]
+    public void IterationCleanup()
+    {
+        _graph.Reset();
+        GC.Collect();
+    }
     
     [Benchmark]
     public void Bfs()

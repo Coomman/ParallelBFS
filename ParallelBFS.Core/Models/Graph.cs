@@ -1,33 +1,23 @@
-﻿using System.Collections;
+﻿namespace ParallelBFS.Core.Models;
 
-namespace ParallelBFS.Core.Models;
-
-public class Graph : IEnumerable<Node>
+public class Graph
 {
-    private readonly IList<Node> _nodes;
+    private readonly Node[] _nodes;
 
-    public Node this[int index] => _nodes[index];
-
-    public Graph(IList<Node> nodes)
+    public Graph(Node[] nodes)
     {
         _nodes = nodes;
     }
+    
+    public Node this[int index] => _nodes[index];
+
+    public int Count => _nodes.Length;
 
     public void Reset()
     {
-        foreach (var node in _nodes)
+        for (int i = 0; i < Count; i++)
         {
-            node.Depth = -1;
+            _nodes[i].Depth = -1;
         }
-    }
-    
-    public IEnumerator<Node> GetEnumerator()
-    {
-        return _nodes.GetEnumerator();
-    }
-
-    IEnumerator IEnumerable.GetEnumerator()
-    {
-        return GetEnumerator();
     }
 }

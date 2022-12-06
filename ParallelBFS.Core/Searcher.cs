@@ -17,8 +17,10 @@ public static class Searcher
             var cur = stack.Pop();
             cur.Depth = 1;
 
-            foreach (var node in cur)
+            for (int i = 0; i < cur.Count; i++)
             {
+                var node = cur[i];
+
                 if (node.NotVisited)
                 {
                     stack.Push(node);
@@ -29,23 +31,24 @@ public static class Searcher
     
     public static void Bfs(this Graph graph, int start)
     {
-        var queue = new Queue<Node>();
+        var currentLayer = new Queue<Node>();
+        var nextLayer = new Queue<Node>();
         
         graph[start].Depth = 0;
-        queue.Enqueue(graph[start]);
+        currentLayer.Enqueue(graph[start]);
 
-        while (queue.Any())
+        int depth = 1;
+        while (currentLayer.Any())
         {
-            var cur = queue.Dequeue();
-
-            foreach (var node in cur)
+            foreach (var node in currentLayer)
             {
-                if (node.NotVisited || node.Depth > cur.Depth + 1)
-                {
-                    node.Depth = cur.Depth + 1;
-                    queue.Enqueue(node);
-                }
+                ProcessNode(node, depth, nextLayer);
             }
+
+            currentLayer = nextLayer;
+            nextLayer = new Queue<Node>();
+
+            depth++;
         }
     }
     
@@ -72,10 +75,26 @@ public static class Searcher
         }
     }
     
+    private static void ProcessNode(Node cur, int depth, Queue<Node> nextLayer)
+    {
+        for (int i = 0; i < cur.Count; i++)
+        {
+            var node = cur[i];
+
+            if (node.NotVisited)
+            {
+                node.Depth = depth;
+                nextLayer.Enqueue(node);
+            }
+        }
+    }
+    
     private static void ProcessNode(Node cur, int depth, ConcurrentQueue<Node> nextLayer)
     {
-        foreach (var node in cur)
+        for (int i = 0; i < cur.Count; i++)
         {
+            var node = cur[i];
+
             if (Interlocked.CompareExchange(ref node.Depth, depth, -1) == -1)
             {
                 nextLayer.Enqueue(node);

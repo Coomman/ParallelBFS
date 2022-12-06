@@ -1,7 +1,6 @@
 ﻿using FluentAssertions;
 using ParallelBFS.Core;
 using ParallelBFS.Core.Generators;
-using ParallelBFS.Core.Models;
 
 namespace ParallelBFS.Tests;
 
@@ -14,7 +13,10 @@ public class GraphGeneratorTests
         
         graph.Dfs(0);
 
-        graph.Should().AllSatisfy(x => x.NotVisited.Should().BeFalse());
+        for (int i = 0; i < graph.Count; i++)
+        {
+            graph[i].NotVisited.Should().BeFalse();
+        }
     }
 
     [Fact]
@@ -42,7 +44,16 @@ public class GraphGeneratorTests
 
             foreach (var (dist, count) in distances)
             {
-                graph.Count(node => node.Depth == dist).Should().Be(count);
+                var realCount = 0;
+                for (int i = 0; i < graph.Count; i++)
+                {
+                    if (graph[i].Depth == dist)
+                    {
+                        realCount++;
+                    }
+                }
+                
+                realCount.Should().Be(count);
             }
         }
     }

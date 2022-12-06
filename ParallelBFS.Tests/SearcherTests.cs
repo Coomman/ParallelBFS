@@ -26,11 +26,21 @@ public class SearcherTests
     private static void TestCorrectness(Graph graph)
     {
         graph.Bfs(0);
-        var res = graph.Select(x => x.Depth).ToArray();
-        
+        var arr1 = new int[graph.Count];
+        for (int i = 0; i < arr1.Length; i++)
+        {
+            arr1[i] = graph[i].Depth;
+        }
+
         graph.Reset();
         graph.ParallelBfs(0);
+        
+        var arr2 = new int[graph.Count];
+        for (int i = 0; i < arr2.Length; i++)
+        {
+            arr2[i] = graph[i].Depth;
+        }
 
-        graph.Select(x => x.Depth).SequenceEqual(res).Should().BeTrue();
+        arr1.SequenceEqual(arr2).Should().BeTrue();
     }
 }
